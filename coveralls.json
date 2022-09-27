@@ -5,5 +5,9 @@
     "lib/dm_bank/application.ex",
     "lib/dm_bank_web/gettext.ex",
     "lib/dm_bank_web/views/error_helpers.ex"
-  ]
+  ],
+  "coverage_options": {
+    "treat_no_relevante_lines_as_covered": true,
+    "minimum_coerage": 80
+  }
 }
