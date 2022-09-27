@@ -1,0 +1,9 @@
+{
+  "skip_files": [
+    "test/support/*",
+    "lib/dm_bank_web/telemetry.ex",
+    "lib/dm_bank/application.ex",
+    "lib/dm_bank_web/gettext.ex",
+    "lib/dm_bank_web/views/error_helpers.ex"
+  ]
+}
