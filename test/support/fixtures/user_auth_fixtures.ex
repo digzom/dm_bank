@@ -11,8 +11,8 @@ defmodule DmBank.UserAuthFixtures do
     {:ok, user} =
       attrs
       |> Enum.into(%{
-        email: "john@email.com",
-        name: "John Doe",
+        email: Faker.Internet.email(),
+        name: Faker.Person.PtBr.name(),
         password_hash: ""
       })
       |> DmBank.UserAuth.create_user()
