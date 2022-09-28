@@ -60,7 +60,8 @@ defmodule DmBank.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:faker, "~> 0.17", only: :test}
+      {:faker, "~> 0.17", only: :test},
+      {:ex_machina, "~> 2.7.0", only: :test}
     ]
   end
 
