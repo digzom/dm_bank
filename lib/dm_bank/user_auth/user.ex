@@ -31,7 +31,7 @@ defmodule DmBank.UserAuth.User do
     |> validate_required([:name, :email, :password])
     # retornará o erro na hora do insert
     |> unique_constraint([:email])
-    # compare with password_confirmation
+    # compare with password_confirmation field
     |> validate_confirmation(:password)
     |> put_password_hash()
   end

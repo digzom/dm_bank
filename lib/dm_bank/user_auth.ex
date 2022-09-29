@@ -8,7 +8,7 @@ defmodule DmBank.UserAuth do
 
   def register_user(attrs \\ %{}) do
     %User{}
-    |> User.changeset(attrs)
+    |> User.registration_changeset(attrs)
     |> Repo.insert()
   end
 

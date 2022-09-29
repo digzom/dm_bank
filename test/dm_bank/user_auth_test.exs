@@ -16,11 +16,17 @@ defmodule DmBank.UserAuthTest do
     end
 
     test "register_user/1 with valid data creates a user" do
-      valid_attrs = %{email: "john@email.com", name: "John Doe", password_hash: ""}
+      valid_attrs = %{
+        email: "john@email.com",
+        name: "John Doe",
+        password: "123456",
+        password_confirmation: "123456"
+      }
 
       assert {:ok, %User{} = user} = UserAuth.register_user(valid_attrs)
       assert user.email == "john@email.com"
       assert user.name == "John Doe"
+      assert Pbkdf2.verify_pass("123456", user.password_hash)
     end
 
     test "register_user/1 with invalid data returns error changeset" do
