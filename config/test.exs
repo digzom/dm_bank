@@ -20,6 +20,8 @@ config :dm_bank, DmBankWeb.Endpoint,
   secret_key_base: "gVdczK5w2gadgd/ugxJR75OnjBEAULZLdBnN5ofluOo53chj/qt0/4+yMuXTJkUX",
   server: false
 
+config :pbkdf2_elixir, rouds: 1
+
 # In test we don't send emails.
 config :dm_bank, DmBank.Mailer, adapter: Swoosh.Adapters.Test
 
