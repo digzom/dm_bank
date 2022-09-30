@@ -18,9 +18,22 @@ defmodule DmBankWeb.UserControllerTest do
 
       conn = post(conn, Routes.user_path(conn, :create), user: user_params)
       assert %{"id" => _id, "email" => email, "name" => name} = json_response(conn, 201)["data"]
+
       # first the actual and then the created one
       assert email == user_params.email
       assert name == user_params.name
+    end
+
+    test "do not renders the password", %{conn: conn} do
+      user_params =
+        :user
+        |> params_for(password: "1234567")
+        |> Map.put(:password_confirmation, "1234567")
+
+      conn = post(conn, Routes.user_path(conn, :create), user: user_params)
+      data = json_response(conn, 201)["data"]
+
+      assert Map.has_key?(data, "password") == false
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
