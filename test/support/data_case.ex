@@ -25,6 +25,7 @@ defmodule DmBank.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import DmBank.DataCase
+      import DmBank.Factory
     end
   end
 

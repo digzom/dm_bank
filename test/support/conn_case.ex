@@ -23,6 +23,7 @@ defmodule DmBankWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import DmBankWeb.ConnCase
+      import DmBank.Factory
 
       alias DmBankWeb.Router.Helpers, as: Routes
 
