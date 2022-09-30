@@ -16,19 +16,20 @@ defmodule DmBank.UserAuth.User do
     timestamps()
   end
 
-  def changeset(user, attrs) do
+  def update_changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email])
-    |> validate_required([:name, :email])
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
+
     # retornará o erro na hora do insert
-    |> unique_constraint([:email])
   end
 
   @doc false
   def registration_changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :password])
-    |> validate_required([:name, :email, :password])
+    |> update_changeset(attrs)
+    |> cast(attrs, [:email, :password])
+    |> validate_required([:email, :password])
     # retornará o erro na hora do insert
     |> unique_constraint([:email])
     # compare with password_confirmation field
