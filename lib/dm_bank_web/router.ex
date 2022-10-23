@@ -24,6 +24,7 @@ defmodule DmBankWeb.Router do
     pipe_through :api
 
     resources "/users", UserController, only: [:create]
+    resources "/sessions", SessionController, only: [:create]
   end
 
   # Enables LiveDashboard only for development

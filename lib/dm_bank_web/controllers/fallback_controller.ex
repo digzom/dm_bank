@@ -21,4 +21,13 @@ defmodule DmBankWeb.FallbackController do
     |> put_view(DmBankWeb.ErrorView)
     |> render(:"404")
   end
+
+  def call(conn, error) do
+    IO.inspect(error)
+
+    conn
+    |> put_status(500)
+    |> put_view(DmBankWeb.ErrorView)
+    |> render(:"500")
+  end
 end
