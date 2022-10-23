@@ -18,7 +18,7 @@ config :dm_bank, DmBankWeb.Endpoint,
   pubsub_server: DmBank.PubSub,
   live_view: [signing_salt: "OCo8lRA7"]
 
-config :dm_bank, DmBank.UserAuth.Guardian,
+config :dm_bank, DmBank.Users.Guardian,
   issuer: "dm_bank",
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 

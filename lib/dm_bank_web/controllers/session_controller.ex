@@ -1,22 +1,26 @@
 defmodule DmBankWeb.SessionController do
   use DmBankWeb, :controller
 
-  alias DmBank.UserAuth
-  alias DmBank.UserAuth.Guardian
-  alias DmBank.UserAuth.User
+  alias DmBank.Users
+  alias DmBank.Users.User
+  alias DmBankWeb.Auth
 
   action_fallback DmBankWeb.FallbackController
 
   def create(conn, %{"credentials" => %{"email" => email, "password" => password}}) do
-    with {:ok, %User{} = user} <- UserAuth.authenticate_user(email, password),
-         {:ok, token, _claims} <- encode_and_sign(user) do
+    with {:ok, %User{} = user} <- Users.authenticate_user(email, password),
+         {:ok, token} <- Auth.encode_and_sign(user) do
       conn
       |> put_status(:created)
       |> render("show.json", user: user, token: token)
-    end
-  end
+    else
+      {:error, :unauthorized} ->
+        conn
+        |> put_status(:unauthorized)
+        |> render("invalid_credentials.json")
 
-  defp encode_and_sign(user) do
-    Guardian.encode_and_sign(user, %{}, token_type: "access", ttl: {15, :minutes})
+      error ->
+        error
+    end
   end
 end

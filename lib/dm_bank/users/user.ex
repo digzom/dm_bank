@@ -1,4 +1,4 @@
-defmodule DmBank.UserAuth.User do
+defmodule DmBank.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -16,4 +16,12 @@ defmodule DmBankWeb.SessionView do
       token: token
     }
   end
+
+  def render("invalid_credentials.json", _) do
+    %{
+      error: %{
+        message: "Invalid credentials."
+      }
+    }
+  end
 end

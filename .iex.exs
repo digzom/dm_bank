@@ -1,2 +1,2 @@
-alias DmBank.UserAuth
-alias DmBank.UserAuth.Guardian, as: UserGuardian
+alias DmBank.Users
+alias DmBank.Users.Guardian, as: UserGuardian

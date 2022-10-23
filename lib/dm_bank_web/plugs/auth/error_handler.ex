@@ -1,4 +1,4 @@
-defmodule DmBank.UserAuth.ErrorHandler do
+defmodule DmBank.Users.ErrorHandler do
   import Plug.Conn
 
   @behaviour Guardian.Plug.ErrorHandler
