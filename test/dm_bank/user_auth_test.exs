@@ -37,12 +37,10 @@ defmodule DmBank.UserAuthTest do
       user = insert(:user)
 
       update_attrs = %{
-        email: "john_doe@email.com",
         name: "John"
       }
 
       assert {:ok, %User{} = user} = UserAuth.update_user(user, update_attrs)
-      assert user.email == "john_doe@email.com"
       assert user.name == "John"
     end
 
@@ -61,6 +59,23 @@ defmodule DmBank.UserAuthTest do
     test "change_user/1 returns a user changeset" do
       user = insert(:user)
       assert %Ecto.Changeset{} = UserAuth.change_user(user)
+    end
+
+    test "authenticate_user/2 returns the user with valid password" do
+      {:ok, user} = params_for(:user, password: "123456") |> UserAuth.register_user()
+
+      assert {:ok, %User{} = authenticated_user} =
+               UserAuth.authenticate_user(user.email, "123456")
+
+      assert user.id == authenticated_user.id
+    end
+
+    test "authenticate_user/2 returns the user with wrong password" do
+      {:ok, user} = params_for(:user, password: "123456") |> UserAuth.register_user()
+
+      assert {:error, :unauthorized} = UserAuth.authenticate_user(user.email, "123")
+
+      assert {:error, :unauthorized} = UserAuth.authenticate_user("some_email@example.com", "123")
     end
   end
 end

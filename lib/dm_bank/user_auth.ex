@@ -14,7 +14,7 @@ defmodule DmBank.UserAuth do
 
   def update_user(%User{} = user, attrs) do
     user
-    |> User.changeset(attrs)
+    |> User.update_changeset(attrs)
     |> Repo.update()
   end
 
@@ -23,6 +23,29 @@ defmodule DmBank.UserAuth do
   end
 
   def change_user(%User{} = user, attrs \\ %{}) do
-    User.changeset(user, attrs)
+    User.update_changeset(user, attrs)
+  end
+
+  def authenticate_user(email, password) do
+    case Repo.get_by(User, email: email) do
+      nil ->
+        # this function runs the password hash function anyway
+        # the goal is to spend the same time verifying a user
+        # that is nome registered and a user that it is, so we
+        # do not give clues to hackers about the username exist
+        Pbkdf2.no_user_verify()
+        # the caller don't need to know if this user exist or not
+        {:error, :unauthorized}
+
+      user ->
+        check_user_password(user, password)
+    end
+  end
+
+  defp check_user_password(%{password_hash: password_hash} = user, password) do
+    cond do
+      Pbkdf2.verify_pass(password, password_hash) -> {:ok, user}
+      true -> {:error, :unauthorized}
+    end
   end
 end
