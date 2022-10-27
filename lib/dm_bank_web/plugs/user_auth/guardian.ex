@@ -1,4 +1,4 @@
-defmodule DmBank.Users.Guardian do
+defmodule DmBankWeb.UserAuth.Guardian do
   use Guardian, otp_app: :dm_bank
 
   alias DmBank.Users

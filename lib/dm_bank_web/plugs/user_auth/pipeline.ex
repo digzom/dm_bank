@@ -1,8 +1,8 @@
-defmodule DmBank.Users.Pipeline do
+defmodule DmBankWeb.UserAuth.Pipeline do
   use Guardian.Plug.Pipeline,
     otp_app: :dm_bank,
-    error_handler: DmBank.Users.ErrorHandler,
-    module: DmBank.Users.Guardian
+    error_handler: DmBankWeb.UserAuth.ErrorHandler,
+    module: DmBankWeb.UserAuth.Guardian
 
   plug Guardian.Plug.VerifySession, claims: %{"typ" => "access"}
   plug Guardian.Plug.VerifyHeader, claims: %{"typ" => "access"}
