@@ -56,4 +56,22 @@ defmodule DmBankweb.SessionControllerTest do
       assert %{"error" => %{"message" => "Invalid credentials."}} = json_response(conn, 401)
     end
   end
+
+  describe "delete session" do
+    alias DmBankWeb.UserAuth
+
+    test "with already authenticated user", %{conn: conn} do
+      user = register_user("pass123")
+
+      {:ok, token} = UserAuth.encode_and_sign(user)
+
+      conn =
+        conn
+        # it has to lowercase but why?
+        |> put_req_header("authorization", "Bearer #{token}")
+        |> delete(Routes.session_path(conn, :delete))
+
+      assert response(conn, 204) == ""
+    end
+  end
 end
