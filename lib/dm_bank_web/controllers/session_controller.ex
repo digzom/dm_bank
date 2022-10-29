@@ -25,5 +25,6 @@ defmodule DmBankWeb.SessionController do
   end
 
   def delete(conn, _params) do
+    conn
   end
 end
