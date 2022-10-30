@@ -1,8 +1,6 @@
 defmodule DmBankWeb.UserControllerTest do
   use DmBankWeb.ConnCase
 
-  alias DmBank.UserAuth.User
-
   @invalid_attrs %{email: nil, name: nil, password: nil, password_confirmation: nil}
 
   setup %{conn: conn} do
@@ -78,9 +76,4 @@ defmodule DmBankWeb.UserControllerTest do
   #     end
   #   end
   # end
-
-  defp create_user(_) do
-    user = create(:user, password: "123456", password_confirmation: "123456")
-    %{user: user}
-  end
 end

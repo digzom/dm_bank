@@ -44,6 +44,7 @@ defmodule DmBank.MixProject do
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.17.5"},
@@ -58,12 +59,12 @@ defmodule DmBank.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:faker, "~> 0.17", only: :test},
       {:ex_machina, "~> 2.7.0", only: :test},
       {:pbkdf2_elixir, "~> 2.0"},
-      {:guardian, "~> 2.0"}
+      {:guardian, "~> 2.0"},
+      {:guardian_db, "~> 2.0"}
     ]
   end
 

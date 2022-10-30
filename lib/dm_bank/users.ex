@@ -1,8 +1,8 @@
-defmodule DmBank.UserAuth do
+defmodule DmBank.Users do
   import Ecto.Query, warn: false
   alias DmBank.Repo
 
-  alias DmBank.UserAuth.User
+  alias DmBank.Users.User
 
   def get_user!(id), do: Repo.get!(User, id)
 

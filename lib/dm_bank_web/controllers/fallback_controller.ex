@@ -22,12 +22,10 @@ defmodule DmBankWeb.FallbackController do
     |> render(:"404")
   end
 
-  def call(conn, error) do
-    IO.inspect(error)
-
+  def call(conn, {:error, :unauthorized}) do
     conn
-    |> put_status(500)
+    |> put_status(:unauthorized)
     |> put_view(DmBankWeb.ErrorView)
-    |> render(:"500")
+    |> render(:"401")
   end
 end

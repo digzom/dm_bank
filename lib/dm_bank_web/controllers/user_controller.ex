@@ -1,18 +1,13 @@
 defmodule DmBankWeb.UserController do
   use DmBankWeb, :controller
 
-  alias DmBank.UserAuth
-  alias DmBank.UserAuth.User
+  alias DmBank.Users
+  alias DmBank.Users.User
 
   action_fallback DmBankWeb.FallbackController
 
-  def index(conn, _params) do
-    users = UserAuth.list_users()
-    render(conn, "index.json", users: users)
-  end
-
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- UserAuth.register_user(user_params) do
+    with {:ok, %User{} = user} <- Users.register_user(user_params) do
       conn
       |> put_status(:created)
       |> render("show.json", user: user)
@@ -20,23 +15,7 @@ defmodule DmBankWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = UserAuth.get_user!(id)
+    user = Users.get_user!(id)
     render(conn, "show.json", user: user)
-  end
-
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = UserAuth.get_user!(id)
-
-    with {:ok, %User{} = user} <- UserAuth.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    user = UserAuth.get_user!(id)
-
-    with {:ok, %User{}} <- UserAuth.delete_user(user) do
-      send_resp(conn, :no_content, "")
-    end
   end
 end

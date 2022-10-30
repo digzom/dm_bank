@@ -1,7 +1,7 @@
 defmodule DmBank.Factory do
   use ExMachina.Ecto, repo: DmBank.Repo
 
-  alias DmBank.UserAuth.User
+  alias DmBank.Users.User
 
   def user_factory do
     %User{

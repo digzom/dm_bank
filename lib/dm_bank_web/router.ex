@@ -14,6 +14,10 @@ defmodule DmBankWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :user_authenticated do
+    plug DmBankWeb.UserAuth.Pipeline
+  end
+
   scope "/", DmBankWeb do
     pipe_through :browser
 
@@ -25,6 +29,12 @@ defmodule DmBankWeb.Router do
 
     resources "/users", UserController, only: [:create]
     resources "/sessions", SessionController, only: [:create]
+  end
+
+  scope "api", DmBankWeb do
+    pipe_through [:api, :user_authenticated]
+
+    resources "/session", SessionController, only: [:delete], singleton: true
   end
 
   # Enables LiveDashboard only for development
