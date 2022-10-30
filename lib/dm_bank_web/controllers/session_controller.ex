@@ -5,7 +5,7 @@ defmodule DmBankWeb.SessionController do
   alias DmBank.Users.User
   alias DmBankWeb.UserAuth
 
-  action_fallback DmBankWeb.FallbackController
+  action_fallback(DmBankWeb.FallbackController)
 
   def create(conn, %{"credentials" => %{"email" => email, "password" => password}}) do
     with {:ok, %User{} = user} <- Users.authenticate_user(email, password),
@@ -25,6 +25,8 @@ defmodule DmBankWeb.SessionController do
   end
 
   def delete(conn, _params) do
-    conn
+    :ok = UserAuth.revoke_current_token(conn)
+
+    send_resp(conn, :no_content, "")
   end
 end

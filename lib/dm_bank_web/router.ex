@@ -15,6 +15,7 @@ defmodule DmBankWeb.Router do
   end
 
   pipeline :user_authenticated do
+    plug DmBankWeb.UserAuth.Pipeline
   end
 
   scope "/", DmBankWeb do

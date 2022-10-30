@@ -14,6 +14,7 @@ defmodule DmBank.Application do
       DmBankWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: DmBank.PubSub},
+      {Guardian.DB.Token.SweeperServer, []},
       # Start the Endpoint (http/https)
       DmBankWeb.Endpoint
       # Start a worker by calling: DmBank.Worker.start_link(arg)

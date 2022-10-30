@@ -67,11 +67,13 @@ defmodule DmBankweb.SessionControllerTest do
 
       conn =
         conn
-        # it has to lowercase but why?
+        # it has to be lowercase but why?
         |> put_req_header("authorization", "Bearer #{token}")
         |> delete(Routes.session_path(conn, :delete))
 
       assert response(conn, 204) == ""
+
+      assert {:error, _error} = UserAuth.decode_and_verify(token)
     end
   end
 end

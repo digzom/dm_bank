@@ -19,8 +19,15 @@ config :dm_bank, DmBankWeb.Endpoint,
   live_view: [signing_salt: "OCo8lRA7"]
 
 config :dm_bank, DmBankWeb.UserAuth.Guardian,
-  issuer: "dm_bank",
+  issuer: "max_bank",
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
+
+# the token should have a short life time for security reasons,
+# no one keep a bank session of 40 minutes, for example.
+config :guardian, Guardian.DB,
+  repo: DmBank.Repo,
+  schema_name: "guardian_tokens",
+  sweep_interval: 60
 
 # Configures the mailer
 #
