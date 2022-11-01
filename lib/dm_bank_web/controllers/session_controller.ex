@@ -7,6 +7,7 @@ defmodule DmBankWeb.SessionController do
 
   action_fallback(DmBankWeb.FallbackController)
 
+  @spec create(conn :: any(), params :: map()) :: any()
   def create(conn, %{"credentials" => %{"email" => email, "password" => password}}) do
     with {:ok, %User{} = user} <- Users.authenticate_user(email, password),
          {:ok, token} <- UserAuth.encode_and_sign(user) do
