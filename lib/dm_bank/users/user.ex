@@ -38,10 +38,7 @@ defmodule DmBank.Users.User do
   end
 
   defp put_password_hash(%Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    hash = Pbkdf2.hash_pwd_salt(password)
-
-    # adicionando a change no changeset
-    put_change(changeset, :password_hash, hash)
+    change(changeset, Pbkdf2.add_hash(password))
   end
 
   defp put_password_hash(changeset), do: changeset
