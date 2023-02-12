@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :dm_bank, DmBank.Repo,
-  username: "general_admin",
-  password: "admin",
+  username: "postgres",
+  password: "postgres",
   hostname: "localhost",
   database: "dm_bank_dev",
   stacktrace: true,

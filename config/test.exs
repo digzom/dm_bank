@@ -6,8 +6,8 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :dm_bank, DmBank.Repo,
-  username: "general_admin",
-  password: "admin",
+  username: "postgres",
+  password: "postgres",
   hostname: "localhost",
   database: "dm_bank_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,

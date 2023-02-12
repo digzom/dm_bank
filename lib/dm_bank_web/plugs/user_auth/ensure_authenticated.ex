@@ -1,4 +1,4 @@
-defmodule DmBankWeb.UserAuth.Pipeline do
+defmodule DmBankWeb.UserAuth.EnsureAuthenticated do
   use Guardian.Plug.Pipeline,
     otp_app: :dm_bank,
     error_handler: DmBankWeb.UserAuth.ErrorHandler,

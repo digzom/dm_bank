@@ -15,7 +15,7 @@ defmodule DmBankWeb.Router do
   end
 
   pipeline :user_authenticated do
-    plug DmBankWeb.UserAuth.Pipeline
+    plug DmBankWeb.UserAuth.EnsureAuthenticated
   end
 
   scope "/", DmBankWeb do
@@ -31,7 +31,7 @@ defmodule DmBankWeb.Router do
     resources "/sessions", SessionController, only: [:create]
   end
 
-  scope "api", DmBankWeb do
+  scope "/api", DmBankWeb do
     pipe_through [:api, :user_authenticated]
 
     resources "/session", SessionController, only: [:delete], singleton: true
