@@ -28,4 +28,19 @@ defmodule DmBankWeb.FallbackController do
     |> put_view(DmBankWeb.ErrorView)
     |> render(:"401")
   end
+
+  def call(conn, {_, {:error, %Ecto.Changeset{} = changeset}}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(DmBankWeb.ChangesetView)
+    |> render("error.json", changeset: changeset)
+  end
+
+  # the empty map is the "changes so far"
+  def call(conn, {:error, :user, %Ecto.Changeset{} = changeset, %{}}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(DmBankWeb.ChangesetView)
+    |> render("error.json", changeset: changeset)
+  end
 end

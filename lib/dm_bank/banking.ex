@@ -16,14 +16,14 @@ defmodule DmBank.Banking do
   @spec get_account!(id :: String.t()) :: map()
   def get_account!(id), do: Repo.get!(Account, id)
 
-  @spec create_account(user :: User.__struct__()) :: map()
+  @spec create_account(user :: User.__struct__()) :: {:ok, struct()}
   def create_account(%User{id: user_id}) do
     %Account{user_id: user_id}
     |> Account.changeset(%{})
     |> Repo.insert()
   end
 
-  @spec account_from_user(user :: User.__struct__()) :: map()
+  @spec account_from_user(user :: User.__struct__()) :: {:ok, struct()}
   def account_from_user(%User{id: user_id}) do
     Account
     |> from(where: [user_id: ^user_id])

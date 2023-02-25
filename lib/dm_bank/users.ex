@@ -1,7 +1,10 @@
 defmodule DmBank.Users do
   import Ecto.Query, warn: false
   alias DmBank.Repo
-
+  alias DmBank.Users
+  alias DmBank.Banking
+  alias DmBank.Repo
+  alias Ecto.Multi
   alias DmBank.Users.User
 
   def get_user!(id), do: Repo.get!(User, id)
@@ -48,5 +51,12 @@ defmodule DmBank.Users do
     else
       {:error, :unauthorized}
     end
+  end
+
+  def register_user_and_account(user_params) do
+    Multi.new()
+    |> Multi.run(:user, fn _, _ -> Users.register_user(user_params) end)
+    |> Multi.run(:account, fn _, %{user: user} -> Banking.create_account(user) end)
+    |> Repo.transaction()
   end
 end

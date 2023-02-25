@@ -24,6 +24,7 @@ defmodule DmBankWeb.ConnCase do
       import Phoenix.ConnTest
       import DmBankWeb.ConnCase
       import DmBank.Factory
+      import DmBank.UsersTestHelpers
 
       alias DmBankWeb.Router.Helpers, as: Routes
 

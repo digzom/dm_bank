@@ -76,5 +76,17 @@ defmodule DmBank.UsersTest do
 
       assert {:error, :unauthorized} = Users.authenticate_user("some_email@example.com", "123")
     end
+
+    test "register_user_and_account/1 create an user and it account" do
+      password = "123456"
+
+      valid_params =
+        :user
+        |> params_for(password: password)
+        |> Map.put(:password_confirmation, password)
+
+      assert {:ok, %{user: _user, account: _account}} =
+               DmBank.register_user_and_account(valid_params)
+    end
   end
 end

@@ -19,7 +19,7 @@ config :dm_bank, DmBankWeb.Endpoint,
   live_view: [signing_salt: "OCo8lRA7"]
 
 config :dm_bank, DmBankWeb.UserAuth.Guardian,
-  issuer: "max_bank",
+  issuer: "dm_bank",
   secret_key: "YcV8HeTLWprrfnIMB1zWVS0drFOUf3QXY3W7FKIqvJxAu+v2VoJomY7NLyk/dydA"
 
 # the token should have a short life time for security reasons,

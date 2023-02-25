@@ -7,8 +7,6 @@ defmodule DmBank.BankingTest do
     alias DmBank.Banking.Account
     alias DmBank.Users.User
 
-    @invalid_attrs %{current_balance: nil}
-
     test "list_account/0 returns all account" do
       account = insert(:account)
       assert Banking.list_account() == [account]

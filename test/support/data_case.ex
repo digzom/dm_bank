@@ -26,6 +26,7 @@ defmodule DmBank.DataCase do
       import Ecto.Query
       import DmBank.DataCase
       import DmBank.Factory
+      import DmBank.UsersTestHelpers
     end
   end
 
