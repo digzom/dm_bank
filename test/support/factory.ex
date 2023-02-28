@@ -12,7 +12,7 @@ defmodule DmBank.Factory do
     }
   end
 
-  def account_factory do
+  def accounts_factory do
     user = insert(:user)
 
     %Account{

@@ -1,7 +1,7 @@
 defmodule DmBank.DmBanking do
   use DmBank.DataCase
 
-  describe "account" do
+  describe "accounts" do
     alias DmBank.Banking.Account
     alias DmBank.Users.User
 
@@ -10,7 +10,7 @@ defmodule DmBank.DmBanking do
     test "register_user_and_account/1 with valid data creates an user and it account" do
       valid_params = valid_user_params()
 
-      assert {:ok, %{user: user, account: account}} =
+      assert {:ok, %{user: user, accounts: account}} =
                DmBank.register_user_and_account(valid_params)
 
       assert %User{id: id} = user

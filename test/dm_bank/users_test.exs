@@ -85,7 +85,7 @@ defmodule DmBank.UsersTest do
         |> params_for(password: password)
         |> Map.put(:password_confirmation, password)
 
-      assert {:ok, %{user: _user, account: _account}} =
+      assert {:ok, %{user: _user, accounts: _account}} =
                DmBank.register_user_and_account(valid_params)
     end
   end

@@ -56,7 +56,7 @@ defmodule DmBank.Users do
   def register_user_and_account(user_params) do
     Multi.new()
     |> Multi.run(:user, fn _, _ -> Users.register_user(user_params) end)
-    |> Multi.run(:account, fn _, %{user: user} -> Banking.create_account(user) end)
+    |> Multi.run(:accounts, fn _, %{user: user} -> Banking.create_account(user) end)
     |> Repo.transaction()
   end
 end
