@@ -34,14 +34,14 @@ defmodule DmBank.Banking do
   @spec create_transaction(account :: %Account{}, params :: map()) ::
           {:ok, map()} | {:error, map()}
   def create_transaction(%Account{id: id}, params) do
-    transaction = %Transaction{to_account_id: id}
+    transaction = %Transaction{to_account_id: id, from_account_id: id}
 
     Multi.new()
     |> Multi.insert(:transaction, Transaction.changeset(transaction, params))
     |> Multi.update_all(
       :balance,
       fn %{transaction: transaction} ->
-        increment_balance(transaction.to_account_id, transaction.amount)
+        increment_balance(transaction)
       end,
       []
     )
@@ -49,10 +49,20 @@ defmodule DmBank.Banking do
     |> normalize_response()
   end
 
+  defp increment_balance(%{type: :deposit} = transaction) do
+    increment_balance(transaction.to_account_id, transaction.amount)
+  end
+
+  defp increment_balance(%{type: :withdraw} = transaction) do
+    amount = Decimal.negate(transaction.amount)
+    increment_balance(transaction.from_account_id, amount)
+  end
+
   defp increment_balance(account_id, amount) do
     Account
     |> from()
     |> where([a], a.id == ^account_id)
+    |> select([a], a.current_balance)
     |> update([a], inc: [current_balance: ^amount])
   end
 

@@ -47,14 +47,29 @@ defmodule DmBank.BankingTest do
 
       params = %{
         type: :deposit,
-        amount: "100"
+        amount: "100.0"
       }
 
       assert {:ok, %Transaction{} = transaction} = Banking.create_transaction(account, params)
       assert transaction.type == :deposit
-      assert transaction.amount == Decimal.new("100")
+      assert transaction.amount == Decimal.new("100.0")
       assert transaction.to_account_id == account.id
       assert transaction.from_account_id == nil
+    end
+
+    test "create_transaction/2 with valid withdraw data creates a withdraw transaction" do
+      account = insert(:accounts)
+
+      params = %{
+        type: :withdraw,
+        amount: "100.0"
+      }
+
+      assert {:ok, %Transaction{} = transaction} = Banking.create_transaction(account, params)
+      assert transaction.type == :withdraw
+      assert transaction.amount == Decimal.new("100.0")
+      assert transaction.from_account_id == account.id
+      assert transaction.to_account_id == nil
     end
 
     test "create_transaction/2 with to_account_id creates a deposit transaction to another account" do
@@ -63,7 +78,7 @@ defmodule DmBank.BankingTest do
 
       params = %{
         type: :deposit,
-        amount: "100",
+        amount: "100.0",
         to_account_id: another_account.id
       }
 
@@ -83,6 +98,33 @@ defmodule DmBank.BankingTest do
       account = Banking.get_account!(account.id)
 
       assert account.current_balance == Decimal.new("100.0")
+    end
+
+    test "create_transaction/2 with valid withdraw data update the account current_balance" do
+      account = insert(:accounts, current_balance: Decimal.new("200.0"))
+
+      params = %{
+        type: :withdraw,
+        amount: "100.0"
+      }
+
+      Banking.create_transaction(account, params)
+      account = Banking.get_account!(account.id)
+
+      assert account.current_balance == Decimal.new("100.0")
+    end
+
+    test "create_transaction/2 with valid withdraw data doesn't allow to withdraw with insuficient funds" do
+      account = insert(:accounts, current_balance: Decimal.new("50.0"))
+
+      params = %{
+        type: :withdraw,
+        amount: "100.0"
+      }
+
+      assert {:error, %Ecto.Changeset{} = changeset} = Banking.create_transaction(account, params)
+
+      assert %{amount: ["insuficient funds"]} = errors_on(changeset)
     end
 
     test "create_transaction/2 with invalid to_account_id doesn't create the deposit" do

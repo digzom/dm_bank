@@ -24,6 +24,7 @@ defmodule DmBank.Banking.Transaction do
     |> validate_required([:type, :amount])
     |> validate_number(:amount, greater_than: 0)
     |> validate_account_ids()
+    |> normalize_account_ids()
     |> assoc_constraint(:from_account)
     |> assoc_constraint(:to_account)
   end
@@ -41,4 +42,12 @@ defmodule DmBank.Banking.Transaction do
   end
 
   defp validate_account_ids(changeset), do: changeset
+
+  defp normalize_account_ids(%Changeset{changes: %{type: :deposit}} = changeset) do
+    put_change(changeset, :from_account_id, nil)
+  end
+
+  defp normalize_account_ids(%Changeset{changes: %{type: :withdraw}} = changeset) do
+    put_change(changeset, :to_account_id, nil)
+  end
 end
